@@ -1,6 +1,6 @@
 // vale-to-prompt.mjs — convert Vale JSON alerts into a repair prompt.
 // Reads Vale JSON on stdin (vale --output=JSON <file>), prints a prompt block
-// with fix sentences grouped by rule, an alert-count footer, and the re-lint command.
+// with fix sentences grouped by rule, and an alert-count summary.
 // Usage: vale --output=JSON <file> | node vale-to-prompt.mjs <file> [--max N] [--format md]
 import { readFileSync } from "node:fs";
 
@@ -69,21 +69,11 @@ if (fixes.length) {
   lines.push("");
   lines.push("Problems to fix:");
   for (const f of shown) lines.push(`- ${f.msg}`);
-  if (dropped > 0) lines.push(`- ... and ${dropped} more (fix the above first, then re-lint)`);
+  if (dropped > 0) lines.push(`- ... and ${dropped} more`);
 } else if (!grades.length) {
   lines.push("No actionable alerts. The text is clean.");
 }
 
-const footer = [
-  "",
-  "---",
-  "After rewriting, re-lint and compare counts:",
-  `  vale <rewritten-file>            # target: 0 errors, few warnings`,
-  `  scripts/repair-prompt.sh <rewritten-file>   # new prompt for the remaining alerts`,
-  "Stop when the counts stop improving. Zero alerts is a ceiling, not a goal:",
-  "do not flatten nuance or caveats to chase the number.",
-];
-
-let out = [...lines, ...footer].join("\n");
+let out = lines.join("\n");
 if (asMarkdown) out = "```\n" + out + "\n```";
 console.log(out);
