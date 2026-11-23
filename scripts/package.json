@@ -1,0 +1,11 @@
+{
+  "name": "ok-ste-score",
+  "version": "1.0.0",
+  "description": "Local scoring of LLM text against ASD-STE100-style plain English rules, using the ste-checker linter from vishalmysore/webSTE100 (MIT).",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test ste-checker.test.js"
+  }
+}

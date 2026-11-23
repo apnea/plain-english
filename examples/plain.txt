@@ -1,0 +1,11 @@
+The cache keeps responses in memory and reuses them when a client asks for the same resource again.
+
+Check the parameters before you change anything. The engineering team owns this check.
+
+The cache removes redundant requests. It makes the system faster.
+
+The platform team implemented the invalidation mechanism. You can configure it for one route or for all routes.
+
+If the system finds an error, it returns the cached response. Investigate the cause before you rely on it.
+
+This design keeps responses fast, but it does not remove the need to fix the error.
