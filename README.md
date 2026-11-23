@@ -58,6 +58,24 @@ informational suggestions and 0 violations. proselint is quiet on both (its chec
 usage-oriented; the canary `proselint check /tmp/x.txt` on "John is very unique and
 utilizes this comprehensive methodology." fires 3 checks).
 
+## The feedback loop
+
+Vale only reports; the loop is you + a model:
+
+```sh
+# 1. get the repair prompt (fix list + fidelity rules + re-lint footer)
+scripts/repair-prompt.sh doc.md > /tmp/prompt.txt
+# 2. paste /tmp/prompt.txt together with the document text into any chatbot
+# 3. save the rewritten text, re-lint, repeat until counts stop improving
+vale doc-rewritten.md
+scripts/repair-prompt.sh doc-rewritten.md
+```
+
+Options: `--max N` (fix lines shown, default 15), `--format md` (fenced block for
+copy-paste), `--help`. Readability grade metrics collapse into one summary line;
+informational polysyllable notes and the E-Prime rule are skipped. The script never
+edits your file; the model does the rewriting, you stay in the loop.
+
 ## Known artifact: line-per-sentence linters
 
 scripts/ste-checker.js (vendored from webSTE100) assumes one sentence per physical line.
