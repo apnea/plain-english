@@ -3,3 +3,4 @@ vale/styles/
 node_modules/
 lesson-structures-before.md
 lesson-structures-after.md
+.opencode/

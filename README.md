@@ -40,7 +40,8 @@ Ready-made tools win over a bespoke merged prompt. Adopted stack:
 3. **proselint** (optional standalone scorer; usage/cliche checks complement write-good's
    passive/wordy checks). https://codeberg.org/amperser/proselint
 
-Full notes with URLs: docs/research.md
+See also docs/agent-style-context-notes.md: context cost of the adapter and its
+runtime-read triggers. Full notes with URLs: docs/research.md
 
 ## Testbed usage
 
@@ -63,10 +64,10 @@ utilizes this comprehensive methodology." fires 3 checks).
 Vale only reports; the loop is you + a model:
 
 ```sh
-# 1. get the repair prompt (fix list + fidelity rules + re-lint footer)
+# 1. get the repair prompt (fix list + fidelity rules)
 scripts/repair-prompt.sh doc.md > /tmp/prompt.txt
 # 2. paste /tmp/prompt.txt together with the document text into any chatbot
-# 3. save the rewritten text, re-lint, repeat until counts stop improving
+# 3. save the rewritten text and re-lint as often as you find useful
 vale doc-rewritten.md
 scripts/repair-prompt.sh doc-rewritten.md
 ```
@@ -74,7 +75,7 @@ scripts/repair-prompt.sh doc-rewritten.md
 Options: `--max N` (fix lines shown, default 15), `--format md` (fenced block for
 copy-paste), `--help`. Readability grade metrics collapse into one summary line;
 informational polysyllable notes and the E-Prime rule are skipped. The script never
-edits your file; the model does the rewriting, you stay in the loop.
+edits your file; the model does the rewriting.
 
 ## Known artifact: line-per-sentence linters
 
